@@ -1,5 +1,22 @@
-*.pyc
+frontend/node_modules
+backend/venv
+
+# Output
+# frontend/*.output
+# frontend/*.vercel
+frontend/.svelte-kit
+frontend/build
+
+# OS
 .DS_Store
-env
-venv
-*.db
+# Thumbs.db
+
+# Env
+# .env
+# .env.*
+# !.env.example
+# !.env.test
+
+# Vite
+# vite.config.js.timestamp-*
+# vite.config.ts.timestamp-*
