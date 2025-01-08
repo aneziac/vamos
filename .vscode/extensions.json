@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "csstools.postcss",
+        "svelte.svelte-vscode",
+        "ms-python.python",
+        "dbaeumer.vscode-eslint",
+        "ms-python.flake8",
+        "bradlc.vscode-tailwindcss"
+    ]
+}
