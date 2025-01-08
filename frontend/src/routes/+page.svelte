@@ -1,15 +1,21 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
+<script lang="ts">
+    // https://help.openai.com/en/articles/7031512-whisper-audio-api-faq
+    const validExtensions = ['.m4a', '.mp3', '.webm', '.mp4', '.mpga', '.wav', '.mpeg']
+</script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-		<h1 class="h1">Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code class="code">/src/routes/+layout.svelte</code> - barebones layout</li>
-			<li><code class="code">/src/app.postcss</code> - app wide css</li>
-			<li>
-				<code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents
-			</li>
-		</ul>
-	</div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="group">
+          <label for="file">Upload your file</label>
+          <input
+            type="file"
+            id="file"
+            name="fileToUpload"
+            accept={validExtensions.join(',')}
+            required
+          />
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
 </div>
