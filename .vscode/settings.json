@@ -116,5 +116,6 @@
 		"transition",
 		"width",
 		"zIndex"
-	]
+	],
+    "python.defaultInterpreterPath": "backend/venv/bin/python"
 }
