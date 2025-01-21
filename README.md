@@ -7,9 +7,9 @@
 #### First Time Setup
 
 1. Install Python 3.10.
-    If on Mac, it is recommended this is done via (`Homebrew`)[https://brew.sh/].
+    If on Mac, it is recommended this is done via [`Homebrew`](https://brew.sh/).
     Install Homebrew, add it to your `PATH` as it directs you, then run `brew install python@3.10`.
-2. Create a (virtual environment)[https://realpython.com/python-virtual-environments-a-primer/] with `python3.10 -m venv venv` in the `backend` directory.
+2. Create a [virtual environment](https://realpython.com/python-virtual-environments-a-primer/) with `python3.10 -m venv venv` in the `backend` directory.
    Make sure you do this in `python3.10`.
 3. Activate the virtual environment via `source venv/bin/activate` on Mac/Linux or `venv\Scripts\activate` on Windows.
    If this worked correctly, you should see `(venv)` pop up on the left of your terminal prompt.
@@ -28,7 +28,7 @@ When you do this, make sure the virtual environment is active (run `which python
 
 #### First Time Setup
 
-1. Install `npm`, the (Node Package Manager)[https://www.npmjs.com/].
+1. Install `npm`, the [Node Package Manager](https://www.npmjs.com/).
    Again, if on Mac, the recommended way to do this is via `brew install node`.
 2. Run `npm install` in the `frontend` directory.
    This will install the required Javascript packages.
@@ -63,7 +63,7 @@ You should then be able to see the file copied to the `backend/uploads` director
 
 ## Downloading Test Data
 
-You can use (`yt-dlp`)[https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#installation] to download Youtube videos as test `mp3` files.
+You can use [`yt-dlp`](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#installation) to download Youtube videos as test `mp3` files.
 
 Example command:
 `yt-dlp --extract-audio --audio-format mp3 '{youtube_url}'`
