@@ -7,7 +7,7 @@ frontend/.svelte-kit
 frontend/build
 
 # testing dirs
-backend/uploads
+# backend/uploads
 
 # OS
 .DS_Store
