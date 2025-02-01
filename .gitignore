@@ -11,3 +11,4 @@ frontend/build
 
 # OS
 .DS_Store
+**/__pycache__/
