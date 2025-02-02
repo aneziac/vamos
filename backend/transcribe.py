@@ -1,9 +1,18 @@
+# type: ignore
 from uuid import UUID
 import whisper
 import logging
 
 from task import Task, TaskStatus
 from database import update_task
+
+
+# SRT time format (HH:MM:SS,MS)
+def srt_time_format(t):
+    return f"{int(t // 3600):02}:" \
+           f"{int((t % 3600) // 60):02}:" \
+           f"{int(t % 60):02}," \
+           f"{int((t * 1000) % 1000):03}"
 
 
 def transcribe_audio(audio_path: str, task_id: UUID):
@@ -26,12 +35,8 @@ def transcribe_audio(audio_path: str, task_id: UUID):
             end_time = segment["end"]
             text = segment["text"]
 
-            # SRT time format (HH:MM:SS,MS)
-            start_time_srt = f"{int(start_time // 3600):02}:{int((start_time % 3600) // 60):02}:{int(start_time % 60):02},{int((start_time * 1000) % 1000):03}"
-            end_time_srt = f"{int(end_time // 3600):02}:{int((end_time % 3600) // 60):02}:{int(end_time % 60):02},{int((end_time * 1000) % 1000):03}"
-
             f.write(f"{idx + 1}\n")
-            f.write(f"{start_time_srt} --> {end_time_srt}\n")
+            f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
             f.write(f"{text}\n\n")
 
     logging.info(f"Transcription saved to: {srt_file}")

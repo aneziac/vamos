@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, Response
+from flask_cors import CORS
 from threading import Thread
 from uuid import UUID, uuid1
 
-from task import TaskStatus, TaskResponse
+from task import TaskPayload, TaskStatus
 from transcribe import transcribe_audio
 from database import get_task, init_db
 
 app = Flask(__name__)
+CORS(app)
 
 
 def get_transcript(task_id: UUID):
@@ -14,7 +16,7 @@ def get_transcript(task_id: UUID):
 
 
 @app.route('/upload', methods=['POST'])
-def upload_file():
+def upload_file() -> tuple[Response | str, int]:
     if 'fileToUpload' not in request.files:
         return "No file part", 400
 
@@ -22,10 +24,11 @@ def upload_file():
     if file.filename == '':
         return "No selected file", 400
 
-    file.save(f"./uploads/audio/{file.filename}")
+    upload_path = f"./uploads/audio/{file.filename}"
+    file.save(upload_path)
 
     task_id = uuid1()
-    thread = Thread(target=transcribe_audio, args=(file.filename, task_id))
+    thread = Thread(target=transcribe_audio, args=(upload_path, task_id))
     thread.start()
 
     return jsonify({
@@ -48,10 +51,10 @@ def get_task_route(task_id: str) -> tuple[Response, int]:
     if not task:
         return jsonify({"status": "not found", "message": "Task not found"}), 404
 
-    status_map: dict[TaskStatus, tuple[TaskResponse, int]] = {
-        TaskStatus.PENDING: (TaskResponse("Task is still being processed."), 202),
-        TaskStatus.FAILED: (TaskResponse("Task has failed."), 500),
-        TaskStatus.COMPLETE: (TaskResponse("Task is complete.", get_transcript(task_uuid)), 200),
+    status_map: dict[TaskStatus, tuple[TaskPayload, int]] = {
+        TaskStatus.PENDING: (TaskPayload("Task is still being processed."), 202),
+        TaskStatus.FAILED: (TaskPayload("Task has failed."), 500),
+        TaskStatus.COMPLETE: (TaskPayload("Task is complete.", get_transcript(task_uuid)), 200),
     }
 
     if task.status not in status_map:
