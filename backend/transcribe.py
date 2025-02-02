@@ -1,19 +1,25 @@
+from uuid import UUID
 import whisper
+import logging
 
-def transcribe_with_whisper(input_file, output_dir):
+from task import Task, TaskStatus
+from database import update_task
+
+
+def transcribe_audio(audio_path: str, task_id: UUID):
     # could be base/small/medium
     model = whisper.load_model("base")
 
+    # Temporarily assume language is english
     result = model.transcribe(
-        input_file,
+        audio_path,
         language="en",
         word_timestamps=True,
     )
 
-    #transcribed_text = result["text"]
     segments = result["segments"]
 
-    srt_file = f"{output_dir}/output.srt"
+    srt_file = './uploads/transcripts/output.srt'
     with open(srt_file, "w") as f:
         for idx, segment in enumerate(segments):
             start_time = segment["start"]
@@ -28,4 +34,9 @@ def transcribe_with_whisper(input_file, output_dir):
             f.write(f"{start_time_srt} --> {end_time_srt}\n")
             f.write(f"{text}\n\n")
 
-    print(f"Transcription saved to: {srt_file}")
+    logging.info(f"Transcription saved to: {srt_file}")
+
+    update_task(Task(
+        id=task_id,
+        status=TaskStatus.COMPLETE
+    ))
