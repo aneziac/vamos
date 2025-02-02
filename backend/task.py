@@ -17,6 +17,7 @@ class TaskStatus(str, Enum):
 @dataclass
 class TaskPayload:
     message: str
+    status: TaskStatus
     transcript: Optional[str] = None
 
 

@@ -12,7 +12,7 @@ CORS(app)
 
 
 def get_transcript(task_id: UUID):
-    pass
+    return open(f"./uploads/transcripts/{task_id}.srt").read()
 
 
 @app.route('/upload', methods=['POST'])
@@ -52,9 +52,9 @@ def get_task_route(task_id: str) -> tuple[Response, int]:
         return jsonify({"status": "not found", "message": "Task not found"}), 404
 
     status_map: dict[TaskStatus, tuple[TaskPayload, int]] = {
-        TaskStatus.PENDING: (TaskPayload("Task is still being processed."), 202),
-        TaskStatus.FAILED: (TaskPayload("Task has failed."), 500),
-        TaskStatus.COMPLETE: (TaskPayload("Task is complete.", get_transcript(task_uuid)), 200),
+        TaskStatus.PENDING: (TaskPayload("Task is still being processed.", TaskStatus.PENDING), 202),
+        TaskStatus.FAILED: (TaskPayload("Task has failed.", TaskStatus.FAILED), 500),
+        TaskStatus.COMPLETE: (TaskPayload("Task is complete.", TaskStatus.COMPLETE, get_transcript(task_uuid)), 200),
     }
 
     if task.status not in status_map:

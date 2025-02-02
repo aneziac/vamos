@@ -3,6 +3,7 @@
 const validExtensions = ['.m4a', '.mp3', '.webm', '.mp4', '.mpga', '.wav', '.mpeg'];
 let taskId: string | null = null;
 let statusMessage: string = '';
+let transcript: string = '';
 
 async function pollTaskStatus(taskId: string) {
     const interval = setInterval(async () => {
@@ -11,6 +12,9 @@ async function pollTaskStatus(taskId: string) {
 
         if (data.status === 'complete' || data.status === 'failed') {
             clearInterval(interval);
+        }
+        if (data.status === 'complete') {
+            transcript = data.transcript;
         }
 
         statusMessage = data.message;
@@ -54,5 +58,9 @@ async function handleSubmit(event: Event) {
     </form>
     {#if statusMessage}
         <p>{statusMessage}</p>
+    {/if}
+
+    {#if transcript}
+        <p>{transcript}</p>
     {/if}
 </div>

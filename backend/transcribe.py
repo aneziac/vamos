@@ -28,7 +28,7 @@ def transcribe_audio(audio_path: str, task_id: UUID):
 
     segments = result["segments"]
 
-    srt_file = './uploads/transcripts/output.srt'
+    srt_file = f'./uploads/transcripts/{task_id}.srt'
     with open(srt_file, "w") as f:
         for idx, segment in enumerate(segments):
             start_time = segment["start"]
