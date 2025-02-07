@@ -17,11 +17,9 @@
    Note if you have an Nvidia GPU with CUDA, you can instead install `requirements_cuda.txt`.
 <!-- 5. After you're done, deactivate the virtual environment with `deactivate`. -->
 
-After the first time, on you only need to do step 3.
+(After the first time, on you only need to do step 3.)
 
-#### Running the Server
-
-Use `python server.py` in the backend directory to run the server.
+Use `python3.10 server.py` in the backend directory to run the server.
 When you do this, make sure the virtual environment is active (run `which python` to confirm you are running the virtual environment's installation of python.)
 
 ### Frontend Setup
