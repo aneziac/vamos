@@ -27,6 +27,12 @@ def log_errors(response):
     return response
 
 
+@app.route('/video', methods=['POST'])
+def handle_video() -> tuple[Response | str, int]:
+    youtube_link = request.form.get('youtubeLink')
+    return youtube_link, 200
+
+
 @app.route('/upload', methods=['POST'])
 def upload_file() -> tuple[Response | str, int]:
     if 'fileToUpload' not in request.files:
