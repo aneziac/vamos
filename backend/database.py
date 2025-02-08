@@ -9,9 +9,12 @@ def init_db():
     """Initialize the SQLite database."""
     conn = sqlite3.connect('tasks.db')
     cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS tasks (
+    cursor.execute('DROP TABLE IF EXISTS tasks')
+    cursor.execute('''
+        CREATE TABLE tasks (
         id TEXT PRIMARY KEY,
         status TEXT NOT NULL,
+        message TEXT,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     )''')
     conn.commit()
@@ -23,9 +26,9 @@ def update_task(task: Task):
     conn = sqlite3.connect('tasks.db')
     cursor = conn.cursor()
     cursor.execute('''
-        INSERT OR REPLACE INTO tasks (id, status)
-        VALUES (?, ?)
-    ''', (str(task.id), str(task.status)))
+        INSERT OR REPLACE INTO tasks (id, status, message)
+        VALUES (?, ?, ?)
+    ''', (str(task.id), str(task.status), task.message))
     conn.commit()
     conn.close()
 
