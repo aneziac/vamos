@@ -25,4 +25,5 @@ class TaskPayload:
 class Task:
     id: UUID
     status: TaskStatus
+    message: Optional[str] = None
     timestamp: Optional[datetime] = None

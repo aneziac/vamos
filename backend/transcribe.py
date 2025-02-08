@@ -1,10 +1,15 @@
 # type: ignore
 from uuid import UUID
 import whisper
-import logging
+from logging import Logger
+import warnings
 
 from task import Task, TaskStatus
 from database import update_task
+
+
+# suppress torch.load warning
+warnings.filterwarnings("ignore", category=FutureWarning, module="whisper")
 
 
 # SRT time format (HH:MM:SS,MS)
@@ -15,7 +20,7 @@ def srt_time_format(t):
            f"{int((t * 1000) % 1000):03}"
 
 
-def transcribe_audio(audio_path: str, task_id: UUID):
+def transcribe_audio(audio_path: str, task_id: UUID, logger: Logger):
     # could be base/small/medium
     model = whisper.load_model("base")
 
@@ -39,9 +44,26 @@ def transcribe_audio(audio_path: str, task_id: UUID):
             f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
             f.write(f"{text}\n\n")
 
-    logging.info(f"Transcription saved to: {srt_file}")
+    logger.info(f"Transcription saved to: {srt_file}")
+
+
+def transcribe_handler(audio_path: str, task_id: UUID, logger: Logger):
+    update_task(Task(
+        id=task_id,
+        status=TaskStatus.PENDING
+    ))
+
+    status = TaskStatus.COMPLETE
+    message = None
+    try:
+        transcribe_audio(audio_path, task_id, logger)
+    except Exception as e:
+        logger.error(str(e))
+        status = TaskStatus.FAILED
+        message = str(e)
 
     update_task(Task(
         id=task_id,
-        status=TaskStatus.COMPLETE
+        status=status,
+        message=message
     ))
