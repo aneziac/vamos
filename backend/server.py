@@ -3,6 +3,8 @@ from flask_cors import CORS
 from threading import Thread
 from uuid import UUID, uuid1
 import logging
+from typing import Callable
+import yt_dlp
 
 from task import TaskPayload, TaskStatus
 from transcribe import transcribe_handler
@@ -29,8 +31,26 @@ def log_errors(response):
 
 @app.route('/video', methods=['POST'])
 def handle_video() -> tuple[Response | str, int]:
-    youtube_link = request.form.get('youtubeLink')
-    return youtube_link, 200
+    link = request.form.get('youtubeLink')
+
+    base_path = './uploads/audio/'
+    # https://stackoverflow.com/questions/75867758/how-to-extract-only-audio-from-downloading-video-python-yt-dlp
+    with yt_dlp.YoutubeDL({
+        'extract_audio': True,
+        'format': 'bestaudio',
+        'outtmpl': base_path + '%(title)s.mp3'
+    }) as video:
+        info_dict = video.extract_info(link, download=True)
+        video_title = info_dict['title']
+        video.download(link)
+
+    task_id = new_task(transcribe_handler, (base_path + video_title + '.mp3',))
+
+    return jsonify({
+        "status": TaskStatus.PENDING,
+        "message": "Your request is being processed.",
+        "task_id": str(task_id)
+    }), 202
 
 
 @app.route('/upload', methods=['POST'])
@@ -45,17 +65,22 @@ def upload_file() -> tuple[Response | str, int]:
     upload_path = f"./uploads/audio/{file.filename}"
     file.save(upload_path)
 
-    task_id = uuid1()
-    thread = Thread(target=transcribe_handler, args=(upload_path, task_id, app.logger))
-    thread.start()
-
-    app.logger.info(f'Created transcription task with ID {task_id}')
+    task_id = new_task(transcribe_handler, (upload_path,))
 
     return jsonify({
         "status": TaskStatus.PENDING,
         "message": "Your request is being processed.",
         "task_id": str(task_id)
     }), 202
+
+
+def new_task(f: Callable, args: tuple) -> UUID:
+    task_id = uuid1()
+    thread = Thread(target=f, args=(*args, task_id, app.logger))
+    thread.start()
+
+    app.logger.info(f'Created transcription task with ID {task_id}')
+    return task_id
 
 
 @app.route('/status/<task_id>', methods=['GET'])

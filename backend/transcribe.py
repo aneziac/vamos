@@ -44,7 +44,7 @@ def transcribe_audio(audio_path: str, task_id: UUID, logger: Logger):
             f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
             f.write(f"{text}\n\n")
 
-    logger.info(f"Transcription saved to: {srt_file}")
+    logger.info(f"Transcript saved to: {srt_file}")
 
 
 def transcribe_handler(audio_path: str, task_id: UUID, logger: Logger):
