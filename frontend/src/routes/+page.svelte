@@ -4,6 +4,7 @@ const validExtensions = ['.m4a', '.mp3', '.webm', '.mp4', '.mpga', '.wav', '.mpe
 let taskId: string | null = null;
 let statusMessage: string = '';
 let transcript: string = '';
+import { writeFileSync } from 'fs';
 
 async function pollTaskStatus(taskId: string) {
     const interval = setInterval(async () => {
@@ -35,6 +36,10 @@ async function handleSubmit(event: Event) {
         taskId = data.task_id as string;
         statusMessage = data.message;
         pollTaskStatus(taskId);
+
+        const { fileToUpload } = formData as { fileToUpload: File };
+        writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
+        
     } else {
         console.error("Failed to upload file: ", await response.text());
     }
