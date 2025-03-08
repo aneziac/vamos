@@ -3,8 +3,8 @@
 const validExtensions = ['.m4a', '.mp3', '.webm', '.mp4', '.mpga', '.wav', '.mpeg'];
 let taskId: string | null = null;
 let statusMessage: string = '';
-let transcript: string = '';
-import { writeFileSync } from 'fs';
+let transcript: string = 'uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg uefkjbf qekfgbqglknq qk4q4lgkn ejkwf ubk4 uhw4kjwbgkuwg wkih,wgbkwug wkugwkjgw wjgkukw4g wugkwj,t4 iwuhkw4 gmiwughmw 4gkwu4htkw,4 kw4umwn riuwgj, bwkufgb,wrg hsgpils nv dbv rg';
+// import { writeFileSync } from 'fs';
 
 async function pollTaskStatus(taskId: string) {
     const interval = setInterval(async () => {
@@ -36,9 +36,8 @@ async function handleSubmit(event: Event) {
         taskId = data.task_id as string;
         statusMessage = data.message;
         pollTaskStatus(taskId);
-
-        const { fileToUpload } = formData as { fileToUpload: File };
-        writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
+        const { fileToUpload } = formData as unknown as { fileToUpload: File };
+        // writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
         
     } else {
         console.error("Failed to upload file: ", await response.text());
@@ -66,6 +65,31 @@ async function handleSubmit(event: Event) {
     {/if}
 
     {#if transcript}
-        <p>{transcript}</p>
+        <div class="scroll-box">
+    
+            <p>{transcript}</p>
+        
+        </div>
+<style>
+        
+    .scroll-box {
+    width: 600px;
+    height: 200px;
+    overflow-y: auto;
+    padding: 50px ;	
+    margin: 30px auto;
+    border: 1px solid white;
+
+    }
+    div { 
+        color: black; 
+        background-color: lightcyan; 
+        text-align: center;
+        position: fixed;
+        top: 120px ; 
+        left: 120px ;
+        width: 100%; }
+        
+    </style>
     {/if}
 </div>
