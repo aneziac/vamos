@@ -39,7 +39,7 @@ async function handleSubmit(event: Event) {
 
         // const { fileToUpload } = formData as { fileToUpload: File };
         // writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
-        
+
     } else {
         console.error("Failed to upload file: ", await response.text());
     }
@@ -66,6 +66,31 @@ async function handleSubmit(event: Event) {
     {/if}
 
     {#if transcript}
-        <p>{transcript}</p>
+        <div class="scroll-box">
+
+            <p>{transcript}</p>
+
+        </div>
+<style>
+
+    .scroll-box {
+    width: 600px;
+    height: 200px;
+    overflow-y: auto;
+    padding: 50px ;
+    margin: 30px auto;
+    border: 1px solid white;
+
+    }
+    div {
+        color: black;
+        background-color: lightcyan;
+        text-align: center;
+        position: fixed;
+        top: 120px ;
+        left: 120px ;
+        width: 100%; }
+
+    </style>
     {/if}
 </div>
