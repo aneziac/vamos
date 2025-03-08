@@ -70,26 +70,25 @@ async function handleSubmit(event: Event) {
             <p>{transcript}</p>
         
         </div>
+
+    {/if}
+</div>
 <style>
         
     .scroll-box {
-    width: 600px;
-    height: 200px;
+    height: 50%;
     overflow-y: auto;
     padding: 50px ;	
     margin: 30px auto;
-    border: 1px solid white;
-
+    border: 5px solid white;
+    color: black; 
+    background-color: lightcyan; 
+    text-align: center;
+    position: fixed;
+    top: 120px ; 
+    left: auto;
+    right: auto;
+    width: 50%;
     }
-    div { 
-        color: black; 
-        background-color: lightcyan; 
-        text-align: center;
-        position: fixed;
-        top: 120px ; 
-        left: 120px ;
-        width: 100%; }
         
     </style>
-    {/if}
-</div>
