@@ -1,34 +1,18 @@
-<!-- <audio controls>
-  <source src=
-"https://media.geeksforgeeks.org/wp-content/uploads/20230524142525/gfg_offline_classes_en.mp3"
-          type="audio/mp3">
-</audio> -->
-
-<!-- <script>
-  import hammo from "hamlet.png";
-</script> -->
-
-<!-- <img src={hammo} alt="hamlet" /> -->
-
-<!-- PUT IT IN THE STATIC DIRECTORY  -->
- 
-<!-- <img src="./favicon.png" alt="square"> -->
-
 <script>
 	import { audioData } from './audioData.js';
-	
-	import TrackHeading from './TrackHeading.svelte';
-	import ProgressBarTime from './ProgressBarTime.svelte';
-	import Controls from './Controls.svelte';
-	import VolumeSlider from './VolumeSlider.svelte';
+
+	import TrackHeading from '$lib/TrackHeading.svelte';
+	import ProgressBarTime from '$lib/ProgressBarTime.svelte';
+	import Controls from '$lib/Controls.svelte';
+	import VolumeSlider from '$lib/VolumeSlider.svelte';
 	// import PlayList from './PlayList.svelte';
-	
+
 	// Get Audio track
 	let trackIndex = 0;
 	// $: console.log(trackIndex)
 	let audioFile = new Audio(audioData[trackIndex].url);
 	let trackTitle = audioData[trackIndex].name;
-	
+
 	const loadTrack = () => {
 		audioFile = new Audio(audioData[trackIndex].url);
 		audioFile.onloadedmetadata = () => {
@@ -37,7 +21,7 @@
 		}
 		trackTitle = audioData[trackIndex].name;
 	}
-	
+
 	// const autoPlayNextTrack = () => {
 	// 	if (trackIndex <= audioData.length-1) {
 	// 		trackIndex += 1;
@@ -49,8 +33,8 @@
 	// 		audioFile.play();
 	// 	}
 	// }
-	
-	
+
+
 	// Track Duration and Progress Bar
 	let totalTrackTime;
 	$: console.log(totalTrackTime)
@@ -58,51 +42,51 @@
 		totalTrackTime = audioFile.duration;
 		updateTime();
 	}
-	
+
 	let totalTimeDisplay = "loading...";
 	let currTimeDisplay = "0:00:00";
 	let progress = 0;
 	let trackTimer;
-	
+
 	function updateTime() {
 		progress = audioFile.currentTime * (100 / totalTrackTime);
-		
+
 		let currHrs = Math.floor((audioFile.currentTime / 60) / 60);
 		let currMins = Math.floor(audioFile.currentTime / 60);
 		let currSecs = Math.floor(audioFile.currentTime - currMins * 60);
-		
+
 		let durHrs = Math.floor( (totalTrackTime / 60) / 60 );
 		let durMins = Math.floor( (totalTrackTime / 60) % 60 );
 		let durSecs =  Math.floor(totalTrackTime - (durHrs*60*60) - (durMins * 60));
-		
+
 		if(currSecs < 10) currSecs = `0${currSecs}`;
 		if(durSecs < 10) durSecs = `0${durSecs}`;
 		if(currMins < 10) currMins = `0${currMins}`;
 		if(durMins < 10) durMins = `0${durMins}`;
-		
+
 		currTimeDisplay = `${currHrs}:${currMins}:${currSecs}`;
 		totalTimeDisplay = `${durHrs}:${durMins}:${durSecs}`;
-		
+
 		if (audioFile.ended) {
 			toggleTimeRunning();
 		}
 	}
-	
+
 	const toggleTimeRunning = () => {
 		if (audioFile.ended) {
 			isPlaying = false;
 			clearInterval(trackTimer);
-			console.log(`Ended = ${audioFile.ended}`);	
+			console.log(`Ended = ${audioFile.ended}`);
 		} else {
 			trackTimer = setInterval(updateTime, 100);
 		}
 	}
-	
+
 
 	// Controls
 	let isPlaying = false;
 	$: console.log(`isPlaying = ${isPlaying}`)
-	
+
 	const playPauseAudio = () => {
 		if (audioFile.paused) {
 			toggleTimeRunning()
@@ -112,17 +96,17 @@
 			toggleTimeRunning()
 			audioFile.pause();
 			isPlaying = false;
-		}	 	
+		}
 	}
-	
+
 	const rewindAudio = () => audioFile.currentTime -= 10;
 	const forwardAudio = () => audioFile.currentTime += 10;
-	
+
 	// Volume Slider
 	let vol = 50;
-	const adjustVol = () => audioFile.volume = vol / 100; 
-	
-	
+	const adjustVol = () => audioFile.volume = vol / 100;
+
+
 	// Playlist
 	// const handleTrack = (e) => {
 	// 	if (!isPlaying) {
@@ -142,23 +126,23 @@
 
 <main>
 	<section id="player-cont">
-		
+
 		<TrackHeading {trackTitle} />
 
-		
+
 		<ProgressBarTime {currTimeDisplay}
 										 {totalTimeDisplay}
 										 {progress} />
-		
-		<Controls {isPlaying} 
+
+		<Controls {isPlaying}
 							on:rewind={rewindAudio}
 							on:playPause={playPauseAudio}
 							on:forward={forwardAudio} />
-		
+
 		<VolumeSlider bind:vol
-									on:input={adjustVol} />	
+									on:input={adjustVol} />
 	</section>
-	
+
 		<!-- <PlayList on:click={handleTrack} /> -->
 </main>
 
@@ -182,5 +166,5 @@
 		background: #222;
 		color: #bbb;
 		border-radius: 5px 5px 0 0;
-	}		
+	}
 </style>
