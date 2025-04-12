@@ -37,6 +37,7 @@ async function handleSubmit(event: Event) {
         statusMessage = data.message;
         pollTaskStatus(taskId);
 
+        // @ts-ignore
         // const { fileToUpload } = formData as { fileToUpload: File };
         // writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
 
@@ -74,9 +75,9 @@ async function handleSubmit(event: Event) {
 
     {/if}
 </div>
-<style>
 
-    .scroll-box {
+<style>
+.scroll-box {
     height: 50%;
     overflow-y: auto;
     padding: 50px ;
@@ -90,6 +91,5 @@ async function handleSubmit(event: Event) {
     left: auto;
     right: auto;
     width: 50%;
-    }
-
-    </style>
+}
+</style>

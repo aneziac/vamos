@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { audioData } from './audioData.js';
 
 	import TrackHeading from '$lib/TrackHeading.svelte';
@@ -36,7 +36,7 @@
 
 
 	// Track Duration and Progress Bar
-	let totalTrackTime;
+	let totalTrackTime: number;
 	$: console.log(totalTrackTime)
 	audioFile.onloadedmetadata = () => {
 		totalTrackTime = audioFile.duration;
@@ -46,23 +46,23 @@
 	let totalTimeDisplay = "loading...";
 	let currTimeDisplay = "0:00:00";
 	let progress = 0;
-	let trackTimer;
+	let trackTimer: NodeJS.Timeout;
 
 	function updateTime() {
 		progress = audioFile.currentTime * (100 / totalTrackTime);
 
 		let currHrs = Math.floor((audioFile.currentTime / 60) / 60);
-		let currMins = Math.floor(audioFile.currentTime / 60);
-		let currSecs = Math.floor(audioFile.currentTime - currMins * 60);
+		let currMins: any = Math.floor(audioFile.currentTime / 60);
+		let currSecs: any = Math.floor(audioFile.currentTime - currMins * 60);
 
 		let durHrs = Math.floor( (totalTrackTime / 60) / 60 );
-		let durMins = Math.floor( (totalTrackTime / 60) % 60 );
-		let durSecs =  Math.floor(totalTrackTime - (durHrs*60*60) - (durMins * 60));
+		let durMins: any = Math.floor( (totalTrackTime / 60) % 60 );
+		let durSecs: any =  Math.floor(totalTrackTime - (durHrs * 60 * 60) - (durMins * 60));
 
-		if(currSecs < 10) currSecs = `0${currSecs}`;
-		if(durSecs < 10) durSecs = `0${durSecs}`;
-		if(currMins < 10) currMins = `0${currMins}`;
-		if(durMins < 10) durMins = `0${durMins}`;
+		if (currSecs < 10) currSecs = `0${currSecs}`;
+		if (durSecs < 10) durSecs = `0${durSecs}`;
+		if (currMins < 10) currMins = `0${currMins}`;
+		if (durMins < 10) durMins = `0${durMins}`;
 
 		currTimeDisplay = `${currHrs}:${currMins}:${currSecs}`;
 		totalTimeDisplay = `${durHrs}:${durMins}:${durSecs}`;
@@ -126,45 +126,39 @@
 
 <main>
 	<section id="player-cont">
-
 		<TrackHeading {trackTitle} />
-
-
 		<ProgressBarTime {currTimeDisplay}
-										 {totalTimeDisplay}
-										 {progress} />
-
+                         {totalTimeDisplay}
+                         {progress} />
 		<Controls {isPlaying}
-							on:rewind={rewindAudio}
-							on:playPause={playPauseAudio}
-							on:forward={forwardAudio} />
-
+			on:rewind={rewindAudio}
+            on:playPause={playPauseAudio}
+            on:forward={forwardAudio} />
 		<VolumeSlider bind:vol
-									on:input={adjustVol} />
+				      on:input={adjustVol} />
 	</section>
 
 		<!-- <PlayList on:click={handleTrack} /> -->
 </main>
 
-
 <style>
-	main {
-		/* width: 100vw;
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 20px 0 0 0;
-		background-color: #ddd; */
-	}
+/* main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 0 0;
+    background-color: #ddd;
+} */
 
-	#player-cont {
-		width: 250px;
-		height: 165px;
-		padding: .7rem 1.5rem 0;
-		box-shadow: 0 0 5px black;
-		background: #222;
-		color: #bbb;
-		border-radius: 5px 5px 0 0;
-	}
+#player-cont {
+    width: 250px;
+    height: 165px;
+    padding: .7rem 1.5rem 0;
+    box-shadow: 0 0 5px black;
+    background: #222;
+    color: #bbb;
+    border-radius: 5px 5px 0 0;
+}
 </style>
