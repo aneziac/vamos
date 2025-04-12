@@ -4,6 +4,15 @@
 	let { children } = $props();
 </script>
 
+<h1 class="maintitle">VAMOS</h1>
+<nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/settings">Settings</a>
+</nav>
+
+{@render children()}
+
 <style>
 	.maintitle {
 		color: black;
@@ -30,15 +39,3 @@
 		padding: 2px 15px;
 	}
 </style>
-
-
-	<h1 class="maintitle">VAMOS</h1>
-	<nav>
-		<a href="/">Home</a>
-		<a href="/about">About</a>
-		<a href="/settings">Settings</a>
-	</nav>
-
-
-
-{@render children()}

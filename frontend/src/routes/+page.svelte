@@ -66,7 +66,7 @@ function resetFileInput() {
 </script>
 
 
-<div class="container h-full mx-auto flex justify-center items-center">
+<div class="container h-full mx-auto flex flex-col justify-center items-center">
     <form on:submit={handleSubmit} enctype="multipart/form-data">
         <div class="group">
             <label for="file">Upload your file</label>
@@ -122,7 +122,7 @@ function resetFileInput() {
     color: black;
     background-color: lightcyan;
     text-align: center;
-    position: fixed;
+    position: float;
     top: 120px ;
     left: auto;
     right: auto;
