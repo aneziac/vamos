@@ -114,9 +114,9 @@ function resetFileInput() {
 
 <style>
     .scroll-box {
-        height: 50%;
+        height: 700px;
         overflow-y: auto;
-        padding: 50px ;
+        padding: 50px;
         margin: 30px auto;
         border: 5px solid white;
         color: black;
@@ -126,7 +126,7 @@ function resetFileInput() {
         top: 120px ;
         left: auto;
         right: auto;
-        width: 50%;
+        width: 75%;
     }
 
     .group{
