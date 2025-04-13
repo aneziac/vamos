@@ -20,14 +20,17 @@
 		text-align: center;
 		margin-top: 50px;
 		font-style: normal;
+		margin: 50px auto;
 	}
 
 	nav {
 		font-size: 20px;
 		display:flex;
-		justify-content: space-between;
+		justify-content: center;
 		width: 20vw;
+		gap: 2rem;
 		margin: 50px auto;
+		box-sizing: border-box;
 	}
 
 	nav a {
@@ -35,7 +38,6 @@
 		color: black;
 		background-color: rgba(240, 248, 255, 0.5);
 		border-radius: 1.5rem;
-		width: 110%;
 		padding: 2px 15px;
 	}
 </style>

@@ -113,19 +113,23 @@ function resetFileInput() {
 </div>
 
 <style>
-.scroll-box {
-    height: 50%;
-    overflow-y: auto;
-    padding: 50px ;
-    margin: 30px auto;
-    border: 5px solid white;
-    color: black;
-    background-color: lightcyan;
-    text-align: center;
-    position: float;
-    top: 120px ;
-    left: auto;
-    right: auto;
-    width: 50%;
-}
+    .scroll-box {
+        height: 50%;
+        overflow-y: auto;
+        padding: 50px ;
+        margin: 30px auto;
+        border: 5px solid white;
+        color: black;
+        background-color: lightcyan;
+        text-align: center;
+        position: float;
+        top: 120px ;
+        left: auto;
+        right: auto;
+        width: 50%;
+    }
+
+    .group{
+        
+    }
 </style>
