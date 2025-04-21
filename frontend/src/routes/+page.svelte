@@ -115,7 +115,7 @@
         {#if transcript}
             <div class="scroll-box">
     
-                <p>{transcript}</p>
+                <pre>{transcript}</pre>
     
             </div>
     
@@ -124,9 +124,9 @@
     
     <style>
         .scroll-box {
-            height: 50%;
+            height: 700px;
             overflow-y: auto;
-            padding: 50px ;
+            padding: 50px;
             margin: 30px auto;
             border: 5px solid white;
             color: black;
@@ -136,7 +136,8 @@
             top: 120px ;
             left: auto;
             right: auto;
-            width: 50%;
+            width: 75%;
+            white-space: normal;
         }
     
         .group{
