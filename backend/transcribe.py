@@ -40,9 +40,12 @@ def transcribe_audio(audio_path: str, task_id: UUID, logger: Logger):
             end_time = segment["end"]
             text = segment["text"]
 
-            f.write(f"{idx + 1}\n")
-            f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
-            f.write(f"{text}\n\n")
+            if(text!=""):
+                #f.write(f"{idx + 1}")
+                #f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
+                f.write(f"{text}\n")
+            else:
+                f.write(f"...\n")
 
     logger.info(f"Transcript saved to: {srt_file}")
 
