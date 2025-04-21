@@ -105,7 +105,7 @@ function resetFileInput() {
     {#if transcript}
         <div class="scroll-box">
 
-            <p>{transcript}</p>
+            <pre>{transcript}</pre>
 
         </div>
 
@@ -127,6 +127,7 @@ function resetFileInput() {
         left: auto;
         right: auto;
         width: 75%;
+        white-space: normal;
     }
 
     .group{
