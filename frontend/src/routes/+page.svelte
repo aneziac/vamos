@@ -233,7 +233,7 @@
     
         {#if transcript}
             <div class="scroll-box">
-    
+                    
                 <pre>{transcript}</pre>
     
             </div>
@@ -242,8 +242,13 @@
     </div>
     
     <style>
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: hidden;
+        }
         .scroll-box {
-            height: 700px;
+            height: 80vh;
             overflow-y: auto;
             padding: 50px;
             margin: 30px auto;
@@ -255,8 +260,7 @@
             top: 120px ;
             left: auto;
             right: auto;
-            width: 75%;
-            white-space: normal;
+            width: 70vw;
         }
 
         #player-cont {
