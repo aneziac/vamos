@@ -16,11 +16,12 @@
 <style>
 	.maintitle {
 		color: black;
-		font-size: 75px;
+		font-size: 90px;
 		text-align: center;
-		margin-top: 50px;
+		margin-top: 30px;
 		font-style: normal;
-		margin: 50px auto;
+		font-family: 'Cal Sans', sans-serif;
+		margin: 20px auto;
 	}
 
 	nav {
@@ -38,6 +39,6 @@
 		color: black;
 		background-color: rgba(240, 248, 255, 0.5);
 		border-radius: 1.5rem;
-		padding: 2px 15px;
+		padding: 2px 13px;
 	}
 </style>
