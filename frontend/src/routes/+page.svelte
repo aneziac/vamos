@@ -14,6 +14,7 @@
     let audioFile: HTMLAudioElement | null = null;
     let trackTitle = audioData[trackIndex].name;
     let totalTrackTime: number;
+    let audioUrl = null; // stores link to local version of uploaded audio
 
     onMount(() => {
         audioFile = new Audio(audioData[trackIndex].url);
@@ -135,8 +136,13 @@
     
     async function handleSubmit(event: Event) {
         event.preventDefault();
-    
+
         const formData = new FormData(event.target as HTMLFormElement);
+
+        console.log(formData)
+        const file = [...formData.entries()][0][1]; // little jank
+        audioUrl = URL.createObjectURL(file);
+        audioFile = new Audio(audioUrl);
     
         let endpoint = "";
         if (formData.has("fileToUpload")) {
@@ -165,6 +171,7 @@
         }
     }
     
+    // TODO: update to clear variables
     function resetFileInput() {
         uploadedFile = false;
         document.getElementById('file')!.value = '';
@@ -213,6 +220,9 @@
                 </button>
             </div> 
 
+            {#if audioUrl}
+            <audio controls src={audioUrl}></audio>
+            {/if}
             <section id="player-cont">
                 <TrackHeading {trackTitle} />
                 <ProgressBarTime {currTimeDisplay}
