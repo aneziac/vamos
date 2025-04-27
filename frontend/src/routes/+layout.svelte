@@ -4,12 +4,12 @@
 	let { children } = $props();
 </script>
 
-<h1 class="maintitle">VAMOS</h1>
-<nav>
+<!-- <h1 class="maintitle">VAMOS</h1> -->
+<!-- <nav>
     <a href="/">Home</a>
     <a href="/about">About</a>
     <a href="/settings">Settings</a>
-</nav>
+</nav> -->
 
 {@render children()}
 
