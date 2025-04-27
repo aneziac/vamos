@@ -12,16 +12,20 @@
 
     let trackIndex = 0;
     let audioFile: HTMLAudioElement | null = null;
-    let trackTitle = audioData[trackIndex].name;
+    let trackTitle = null;
     let totalTrackTime: number;
     let audioUrl = null; // stores link to local version of uploaded audio
 
+
+
     onMount(() => {
-        audioFile = new Audio(audioData[trackIndex].url);
-        audioFile.onloadedmetadata = () => {
-        totalTrackTime = audioFile!.duration;
-        updateTime();
-        };
+        // audioFile = new Audio(audioData[trackIndex].url);
+        // audioFile.onloadedmetadata = () => {
+        // totalTrackTime = audioFile!.duration;
+        // updateTime();
+        // };
+        resetFileInput()
+        document.getElementById('myForm').reset();
     });
 
     let totalTimeDisplay = "loading...";
@@ -138,14 +142,20 @@
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-
-        console.log(formData)
-        const file = [...formData.entries()][0][1]; // little jank
-        audioUrl = URL.createObjectURL(file);
-        audioFile = new Audio(audioUrl);
     
         let endpoint = "";
         if (formData.has("fileToUpload")) {
+            console.log(formData)
+            const file = [...formData.entries()][0][1]; // little jank
+            audioUrl = URL.createObjectURL(file);
+            if (audioFile == null) {
+                audioFile = new Audio(audioUrl);
+                audioFile.onloadedmetadata = () => {
+                    totalTrackTime = audioFile!.duration;
+                    updateTime();
+                };
+            }
+            // audioFile = new Audio(audioUrl);
             endpoint = "upload";
         } else if (formData.has("youtubeLink")) {
             endpoint = "video";
@@ -175,12 +185,13 @@
     function resetFileInput() {
         uploadedFile = false;
         document.getElementById('file')!.value = '';
+        console.clear();
     }
     </script>
     
     
     <div class="container h-full mx-auto flex flex-col justify-center items-center">
-        <form on:submit={handleSubmit} enctype="multipart/form-data">
+        <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
             <div class="group">
                 <label for="file">Upload your file</label>
                 <input
@@ -222,7 +233,6 @@
 
             {#if audioUrl}
             <audio controls src={audioUrl}></audio>
-            {/if}
             <section id="player-cont">
                 <TrackHeading {trackTitle} />
                 <ProgressBarTime {currTimeDisplay}
@@ -235,6 +245,8 @@
                 <VolumeSlider bind:vol
                               on:input={adjustVol} />
             </section>
+            {/if}
+            
         </form>
     
         {#if statusMessage}

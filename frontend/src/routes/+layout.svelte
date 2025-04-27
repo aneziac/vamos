@@ -21,7 +21,7 @@
 		margin-top: 30px;
 		font-style: normal;
 		font-family: 'Cal Sans', sans-serif;
-		margin: 20px auto;
+		margin: 50px auto;
 	}
 
 	nav {
@@ -30,7 +30,7 @@
 		justify-content: center;
 		width: 20vw;
 		gap: 2rem;
-		margin: 50px auto;
+		margin: 25px auto;
 		box-sizing: border-box;
 	}
 
