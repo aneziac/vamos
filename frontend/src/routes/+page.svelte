@@ -203,7 +203,10 @@
                     disabled={youtubeLink !== ''}
                 />
                 {#if uploadedFile}
-                    <button type="button" on:click={resetFileInput}>Delete File</button>
+                    <button 
+                    type="button"
+                    on:click={resetFileInput}
+                    class="bg-red-300 text-white font-semibold px-3 py-1 rounded hover:bg-red-400 transition-colors duration-200 whitespace-nowrap">Delete File</button>
                 {/if}
             </div>
     
