@@ -312,18 +312,18 @@
         overflow-x: hidden;
     }
     .scroll-box {
-        height: 80vh;
+        height: 47vh;
         overflow-y: auto;
         padding: 50px;
         margin: 30px auto;
-        border: 5px solid white;
+        border: 3px solid white;
         color: black;
         background-color: lightcyan;
         text-align: center;
-        position: float;
-        top: 120px ;
-        left: auto;
-        right: auto;
+        position: fixed;
+        left: 15vw;
+        right: 15vw;
+        top: 45vh ;
         width: 70vw;
     }
 
