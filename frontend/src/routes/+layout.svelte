@@ -26,12 +26,14 @@
 		background-position: center; 
 		background-size: cover;
 		font-family: 'Quicksand', sans-serif; 
+		margin: 5px auto;
 	}
 	.maintitle {
 		color: black;
 		font-size: 90px;
 		text-align: center;
-		margin-top: 60px;
+		margin-top: 50px;
+		/* margin-bottom: 5px; */
 		font-style: normal;
 		font-family: 'Cal Sans', sans-serif;
 		/* margin: 20px auto; */
@@ -43,7 +45,8 @@
 		justify-content: center;
 		width: 20vw;
 		gap: 2rem;
-		margin: 25px auto;
+		margin: auto;
+		margin-bottom: 30px;
 		box-sizing: border-box;
 	}
 

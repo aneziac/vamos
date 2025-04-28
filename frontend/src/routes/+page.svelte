@@ -33,12 +33,13 @@
 
     let totalTimeDisplay = "loading...";
     let currTimeDisplay = "0:00:00";
-    let progress = 0;
+    let prog = 0;
+    let totalTime = 0;
     let trackTimer: NodeJS.Timeout;
 
     function updateTime() {
         if (audioFile) {
-            progress = audioFile.currentTime * (100 / totalTrackTime);
+            prog = audioFile.currentTime * (100 / totalTrackTime);
             let currHrs = Math.floor((audioFile.currentTime / 60) / 60);
             let currMins: any = Math.floor(audioFile.currentTime / 60);
             let currSecs: any = Math.floor(audioFile.currentTime - currMins * 60);
@@ -65,8 +66,11 @@
 
     const toggleTimeRunning = () => {
         if (audioFile) {
-            if (audioFile.ended) {
+            totalTime = totalTrackTime;
+            if (audioFile.ended && currTimeDisplay == totalTimeDisplay) {
                 isPlaying = false;
+                prog = 0;
+                currTimeDisplay = "0:00:00";
                 clearInterval(trackTimer);
                 console.log(`Ended = ${audioFile.ended}`);
             } else {
@@ -108,7 +112,7 @@
 
     const onScrub = () => {
         if (audioFile) {
-            audioFile.currentTime = +(e.target as HTMLInputElement).value  || 0;
+            audioFile.currentTime = prog;
             //trackprogress = audioFile.currentTime ?? 0;
         }
     }
@@ -270,22 +274,21 @@
                 </div>
             </form>
 
-            {#if audioUrl}
-            <!-- <audio controls src={audioUrl}></audio> -->
+            <!-- {#if audioUrl}
+            <audio controls src={audioUrl}></audio>
             <section id="player-cont">
                 <TrackHeading {trackTitle} />
                 <ProgressBarTime {currTimeDisplay}
                 {totalTimeDisplay}
-                {progress} />
+                {totalTime} bind:prog on:input={onScrub}/>
                 <Controls {isPlaying}
                 on:rewind={rewindAudio}
                 on:playPause={playPauseAudio}
-                on:forward={forwardAudio}
-                on:scrub={onScrub} />
+                on:forward={forwardAudio}/>
                 <VolumeSlider bind:vol
                 on:input={adjustVol} />
             </section>
-            {/if}
+            {/if} -->
 
 
             {#if statusMessage}
@@ -293,11 +296,28 @@
             {/if}
 
             {#if transcript}
+            
             <div class="scroll-box">
-
+                
                 <pre>{transcript}</pre>
 
+                <div id="player-cont">
+                    <TrackHeading {trackTitle} />
+                    <ProgressBarTime {currTimeDisplay}
+                    {totalTimeDisplay}
+                    {totalTime} bind:prog on:input={onScrub}/>
+                    <div id="layer2">
+                    <Controls {isPlaying}
+                    on:rewind={rewindAudio}
+                    on:playPause={playPauseAudio}
+                    on:forward={forwardAudio} />
+                    <VolumeSlider bind:vol
+                    on:input={adjustVol} />
+                </div>
             </div>
+
+            </div>
+
 
             {/if}
         </div>
@@ -345,5 +365,12 @@
         background: #222;
         color: #bbb;
         border-radius: 5px 5px 0 0;
+        position: absolute;
+    }
+
+    #layer2 {
+        grid-template-columns: 4rem 4rem 4rem 4rem 1fr;
+		place-items: center;
+		column-gap: 1rem;
     }
 </style>

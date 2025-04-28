@@ -24,7 +24,7 @@
           width: 100%; /* Width of the outside container */
           margin: 0;
           display: flex;
-          justify-content: space-between;
+          /* justify-content: space-between; */
           align-items: center;
       }
       
@@ -37,7 +37,7 @@
       .slider {
           -webkit-appearance: none;  /* Override default CSS styles */
           appearance: none;
-          width: 400px; /* Full-width */
+          width: 200px; /* Full-width */
           height: 3px; /* Specified height */
           margin: 0 10px;
           padding: 0;
