@@ -78,7 +78,7 @@
 
     // Controls
     let isPlaying = false;
-    $: console.log(`isPlaying = ${isPlaying}`)
+    // $: console.log(`isPlaying = ${isPlaying}`)
 
     const playPauseAudio = () => {
         if (audioFile) {
@@ -329,13 +329,13 @@
         width: 70vw;
     }
 
-    .maintitle {
+    /* .maintitle {
 		color: black;
 		font-size: 90px;
 		text-align: center;
 		font-style: normal;
 		font-family: 'Cal Sans', sans-serif;
-	}
+	} */
 
     #player-cont {
         width: 500px;

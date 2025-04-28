@@ -1,12 +1,4 @@
 <style>
-  body {
-    text-align: center;
-    margin: 60px auto;
-    font-size: 1.1em; 
-    line-height: 1.6; 
-    font-family: 'Quicksand', sans-serif; 
-    color: #000000;
-  }
 
   .container {
     max-width: 800px;
@@ -14,6 +6,11 @@
     background-color: rgba(240, 248, 255, 0.5);
 		border-radius: 1.5rem;
 		padding: 2px 13px;
+    text-align: center;
+    font-size: 1.1em; 
+    line-height: 1.6; 
+    /* font-family: 'Quicksand', sans-serif;  */
+    color: #000000;
   }
 
   ul {
