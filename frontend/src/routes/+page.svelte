@@ -302,8 +302,7 @@
             
             <div class="scroll-box">
                 
-                
-
+                {#if audioUrl}
                 <div id="player-cont">
                     <TrackHeading {trackTitle} />
                     <ProgressBarTime {currTimeDisplay}
@@ -320,7 +319,11 @@
                     on:input={adjustVol} />
                     </div>
                 </div>
-                <pre>{transcript}</pre>
+                <pre id="text1">{transcript}</pre>
+                {/if}
+                {#if !audioUrl}
+                <pre id="text2">{transcript}</pre>
+                {/if}
             </div>
 
 
@@ -341,12 +344,12 @@
     }
     .scroll-box {
         height: 47vh;
-        overflow-y: auto;
-        padding: 50px;
+        overflow-y: scroll;
+        /* padding: 50px; */
         margin: 30px auto;
         border: 3px solid white;
         color: black;
-        background-color: lightcyan;
+        background-color: rgb(216, 228, 233);
         text-align: center;
         position: fixed;
         left: 15vw;
@@ -354,17 +357,22 @@
         top: 45vh ;
         width: 70vw;
     }
+    #text1 {
+        z-index: 10;
+        height: 60%;
+        overflow-y: scroll;
+        font-family: 'Quicksand', sans-serif; 
+    }
 
-    /* .maintitle {
-		color: black;
-		font-size: 90px;
-		text-align: center;
-		font-style: normal;
-		font-family: 'Cal Sans', sans-serif;
-	} */
-
+    #text2 {
+        z-index: 10;
+        height: 100%;
+        overflow-y: scroll;
+        padding: 20px;
+        font-family: 'Quicksand', sans-serif; 
+    }
     #player-cont {
-        background: rgba(6, 67, 91, 0.5);
+        background: rgba(28, 82, 103, 0.5);
         width: 100%;
         padding: .5rem 1.5rem;
         padding-bottom: 3rem;
