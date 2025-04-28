@@ -152,6 +152,14 @@
             statusMessage = data.message;
         }, 5000); // Poll every 5 seconds
     }
+    async function checkFileExists(taskId: string) {
+        const response = await fetch(`${baseServerURL}/file-exists/${taskId}`);
+        if (response.ok) {
+            const data = await response.json();
+            return data.exists;
+        }
+        return false;
+        }
 
     async function handleSubmit(event: Event) {
         event.preventDefault();
@@ -330,6 +338,9 @@
 
             {/if}
         </div>
+        <section class="download-action">
+            <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
+        </section>
     <!-- </div> -->
     <!-- <div class="h-[1%] bg-gradient-to-b from-gray-700 to-gray-900 p-4">
     </div> -->
@@ -389,5 +400,26 @@
         margin-left: 10px;
         margin: 5px;
     }
+    
+    .download-action {
+        text-align: center;
+        margin-top: 20px;
+        position: absolute;
+        top: 5vh;
+    }
 
+
+    .download-link {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+
+    .download-link:hover {
+        background-color: #45a049;
+    }
 </style>
