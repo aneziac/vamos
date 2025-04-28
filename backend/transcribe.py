@@ -3,6 +3,7 @@ from uuid import UUID
 import whisper
 from logging import Logger
 import warnings
+import os
 
 from task import Task, TaskStatus
 from database import update_task
@@ -34,6 +35,9 @@ def transcribe_audio(audio_path: str, task_id: UUID, logger: Logger):
     segments = result["segments"]
 
     srt_file = f'./uploads/transcripts/{task_id}.srt'
+
+    os.makedirs(os.path.dirname(srt_file), exist_ok=True)
+    
     with open(srt_file, "w") as f:
         for idx, segment in enumerate(segments):
             start_time = segment["start"]

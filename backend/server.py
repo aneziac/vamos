@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, send_file, send_from_directory
 from flask_cors import CORS
 from threading import Thread
 from uuid import UUID, uuid1
 import logging
 from typing import Callable
 import yt_dlp
+import os
 
 from task import TaskPayload, TaskStatus
 from transcribe import transcribe_handler
@@ -73,6 +74,34 @@ def upload_file() -> tuple[Response | str, int]:
         "task_id": str(task_id)
     }), 202
 
+@app.route('/download/<task_id>')
+def download_transcript(task_id: str):
+    try:
+        task_uuid = UUID(task_id)
+    except ValueError:
+        return jsonify({"error": f"Invalid task ID: {task_id}"}), 400
+
+    task = get_task(task_uuid)
+    if not task:
+        return jsonify({"error": f"Task {task_id} not found"}), 404
+
+    if task.status != TaskStatus.COMPLETE:
+        return jsonify({"error": f"Task {task_id} is not yet complete"}), 400
+
+    transcript_dir = os.path.join(os.getcwd(), 'uploads', 'transcripts')
+    transcript_path = os.path.join(transcript_dir, f"{task_uuid}.srt")
+
+    app.logger.debug(f"Serving transcript from {transcript_path}")
+
+    if not os.path.exists(transcript_path):
+        app.logger.error(f"Transcript for task {task_id} not found at {transcript_path}")
+        return jsonify({"error": f"Transcript for task {task_id} not found"}), 404
+
+    try:
+        return send_from_directory(transcript_dir, f"{task_uuid}.srt", as_attachment=True)
+    except Exception as e:
+        app.logger.exception(f"Error sending file for task {task_id}: {str(e)}")
+        return jsonify({"error": "Internal server error while sending file"}), 500
 
 def new_task(f: Callable, args: tuple) -> UUID:
     task_id = uuid1()
