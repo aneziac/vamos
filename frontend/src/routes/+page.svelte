@@ -33,13 +33,15 @@
 
     let totalTimeDisplay = "loading...";
     let currTimeDisplay = "0:00:00";
-    let prog = 0;
+    let progress = 0;
+    let prog = progress;
     let totalTime = 0;
     let trackTimer: NodeJS.Timeout;
 
     function updateTime() {
         if (audioFile) {
-            prog = audioFile.currentTime * (100 / totalTrackTime);
+            progress = audioFile.currentTime * (100 / totalTrackTime);
+            prog = audioFile.currentTime;
             let currHrs = Math.floor((audioFile.currentTime / 60) / 60);
             let currMins: any = Math.floor(audioFile.currentTime / 60);
             let currSecs: any = Math.floor(audioFile.currentTime - currMins * 60);
@@ -69,6 +71,7 @@
             totalTime = totalTrackTime;
             if (audioFile.ended && currTimeDisplay == totalTimeDisplay) {
                 isPlaying = false;
+                progress = 0;
                 prog = 0;
                 currTimeDisplay = "0:00:00";
                 clearInterval(trackTimer);
@@ -113,7 +116,7 @@
     const onScrub = () => {
         if (audioFile) {
             audioFile.currentTime = prog;
-            //trackprogress = audioFile.currentTime ?? 0;
+            updateTime();
         }
     }
 

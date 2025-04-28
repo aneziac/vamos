@@ -3,6 +3,7 @@
 	export let totalTimeDisplay;
 	export let totalTime;
 	export let prog;
+	// export let progress;
 
 </script>
 
@@ -28,8 +29,9 @@
 	min="0" 
 	max="{totalTime}"
 	style="width: 100%"
-	on:input
 	bind:value={prog}
+	on:input
+
 	>
 </div>
 
