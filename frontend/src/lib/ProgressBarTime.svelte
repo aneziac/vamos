@@ -2,6 +2,9 @@
 	export let currTimeDisplay;
 	export let totalTimeDisplay;
 	export let progress;
+
+	import { createEventDispatcher } from 'svelte';
+	let dispatch = createEventDispatcher();
 </script>
 
 
@@ -12,6 +15,13 @@
 
 <div id="progress-bar-cont">
 	<span id="bar" style="width: {progress}%"></span>
+	<!-- <input class='trackslider'
+    style="width: {progress}%"
+	on:click={() => dispatch('scrub')}
+	type = 'range'
+	max={totalTimeDisplay}
+    min={0}
+    value={progress}/> -->
 </div>
 
 

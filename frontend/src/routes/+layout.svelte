@@ -4,24 +4,37 @@
 	let { children } = $props();
 </script>
 
-<!-- <h1 class="maintitle">VAMOS</h1> -->
-<!-- <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/settings">Settings</a>
-</nav> -->
+	<h1 class="maintitle">VAMOS</h1>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/about">About</a>
+		<!-- <a href="/settings">Settings</a> -->
+	</nav>
+
+
+<!-- <div class="h-[100%] bg-[url('/mountains.jpg')] bg-cover bg-left p-4">
+</div> -->
+
 
 {@render children()}
 
 <style>
+	:global(body) {
+		@apply bg-[url('/mountains.jpg')];
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center; 
+		background-size: cover;
+		font-family: 'Quicksand', sans-serif; 
+	}
 	.maintitle {
 		color: black;
 		font-size: 90px;
 		text-align: center;
-		margin-top: 30px;
+		margin-top: 60px;
 		font-style: normal;
 		font-family: 'Cal Sans', sans-serif;
-		margin: 50px auto;
+		/* margin: 20px auto; */
 	}
 
 	nav {
@@ -41,4 +54,6 @@
 		border-radius: 1.5rem;
 		padding: 2px 13px;
 	}
+
+
 </style>

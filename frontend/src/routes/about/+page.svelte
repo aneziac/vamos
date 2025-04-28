@@ -5,11 +5,15 @@
     font-size: 1.1em; 
     line-height: 1.6; 
     font-family: 'Quicksand', sans-serif; 
+    color: #000000;
   }
 
   .container {
     max-width: 800px;
     margin: 0 auto;
+    background-color: rgba(240, 248, 255, 0.5);
+		border-radius: 1.5rem;
+		padding: 2px 13px;
   }
 
   ul {

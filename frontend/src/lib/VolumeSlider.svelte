@@ -37,7 +37,7 @@
       .slider {
           -webkit-appearance: none;  /* Override default CSS styles */
           appearance: none;
-          width: 200px; /* Full-width */
+          width: 400px; /* Full-width */
           height: 3px; /* Specified height */
           margin: 0 10px;
           padding: 0;

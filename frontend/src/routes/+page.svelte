@@ -106,7 +106,12 @@
         }
     };
 
-    // const forwardAudio = () => audioFile.currentTime += 10;
+    const onScrub = () => {
+        if (audioFile) {
+            audioFile.currentTime = +(e.target as HTMLInputElement).value  || 0;
+            //trackprogress = audioFile.currentTime ?? 0;
+        }
+    }
 
     // Volume Slider
     let vol = 50;
@@ -123,7 +128,6 @@
     let taskId: string | null = null;
     let statusMessage: string = '';
     let transcript: string = '';
-    // import { writeFileSync } from 'fs';
 
     async function pollTaskStatus(taskId: string) {
         const interval = setInterval(async () => {
@@ -132,6 +136,7 @@
 
             if (data.status === 'complete' || data.status === 'failed') {
                 clearInterval(interval);
+                resetFileInput();
             }
             if (data.status === 'complete') {
                 transcript = data.transcript;
@@ -148,17 +153,6 @@
 
         let endpoint = "";
         if (formData.has("fileToUpload")) {
-            console.log(formData)
-            const file = [...formData.entries()][0][1]; // little jank
-            audioUrl = URL.createObjectURL(file);
-            if (audioFile == null) {
-                audioFile = new Audio(audioUrl);
-                audioFile.onloadedmetadata = () => {
-                    totalTrackTime = audioFile!.duration;
-                    updateTime();
-                };
-            }
-            // audioFile = new Audio(audioUrl);
             endpoint = "upload";
         } else if (formData.has("youtubeLink")) {
             endpoint = "video";
@@ -175,9 +169,16 @@
             statusMessage = data.message;
             pollTaskStatus(taskId);
 
-            // @ts-ignore
-            // const { fileToUpload } = formData as { fileToUpload: File };
-            // writeFileSync(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()));
+            console.log(formData)
+            const file = [...formData.entries()][0][1]; // little jank
+            audioUrl = URL.createObjectURL(file);
+            if (audioFile == null) {
+                audioFile = new Audio(audioUrl);
+                audioFile.onloadedmetadata = () => {
+                    totalTrackTime = audioFile!.duration;
+                    updateTime();
+                };
+            }
 
         } else {
             console.error("Failed to upload file: ", await response.text());
@@ -207,11 +208,11 @@
     }
 </script>
 
-<div class="flex flex-col h-screen overflow-hidden">
-    <div class="h-[1%] bg-gradient-to-t from-gray-500 to-gray-900 p-4">
-    </div>
-    <div class="h-[98%] bg-[url('/mountains.jpg')] bg-cover bg-left p-4">
-        <h1 class="maintitle mt-10">VAMOS</h1>
+<!-- <div class="flex flex-col h-screen overflow-hidden"> -->
+    <!-- <div class="h-[1%] bg-gradient-to-t from-gray-500 to-gray-900 p-4">
+    </div> -->
+    <!-- <div class="h-[100%] bg-[url('/mountains.jpg')] bg-cover bg-left p-4"> -->
+        <!-- <h1 class="maintitle mt-10">VAMOS</h1> -->
         <div class="container mx-auto max-w-4xl justify-center items-center">
             <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
                 <div class="flex rounded-2xl overflow-hidden bg-gray-100">
@@ -270,7 +271,7 @@
             </form>
 
             {#if audioUrl}
-            <audio controls src={audioUrl}></audio>
+            <!-- <audio controls src={audioUrl}></audio> -->
             <section id="player-cont">
                 <TrackHeading {trackTitle} />
                 <ProgressBarTime {currTimeDisplay}
@@ -279,7 +280,8 @@
                 <Controls {isPlaying}
                 on:rewind={rewindAudio}
                 on:playPause={playPauseAudio}
-                on:forward={forwardAudio} />
+                on:forward={forwardAudio}
+                on:scrub={onScrub} />
                 <VolumeSlider bind:vol
                 on:input={adjustVol} />
             </section>
@@ -299,10 +301,10 @@
 
             {/if}
         </div>
-    </div>
-    <div class="h-[1%] bg-gradient-to-b from-gray-700 to-gray-900 p-4">
-    </div>
-</div>
+    <!-- </div> -->
+    <!-- <div class="h-[1%] bg-gradient-to-b from-gray-700 to-gray-900 p-4">
+    </div> -->
+<!-- </div> -->
 
 
 <style>
@@ -336,7 +338,7 @@
 	}
 
     #player-cont {
-        width: 300px;
+        width: 500px;
         height: 165px;
         padding: .7rem 1.5rem 0;
         box-shadow: 0 0 5px black;
