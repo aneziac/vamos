@@ -37,7 +37,7 @@
       .slider {
           -webkit-appearance: none;  /* Override default CSS styles */
           appearance: none;
-          width: 200px; /* Full-width */
+          width: 150px; /* Full-width */
           height: 3px; /* Specified height */
           margin: 0 10px;
           padding: 0;
@@ -68,7 +68,7 @@
       .slider::-moz-range-thumb {
           width: 15px; /* Set a specific slider handle width */
           height: 15px; /* Slider handle height */
-          background: #4CAF50; /* Green background */
+          background: #007AFF; /* Green background */
           cursor: pointer; /* Cursor on hover */
       }
   </style>

@@ -32,18 +32,21 @@
 	bind:value={prog}
 	on:input
 
-	>
+	/>
 </div>
 
 
 <style>
+	#slider {
+		color:aqua;
+	}
 	#time {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
 	}
 
-	#progress-bar-cont {
+	/* #progress-bar-cont {
 		width: 100%;
 		height: 10px;
 		margin: .5rem 0 .5rem;
@@ -51,7 +54,7 @@
 		align-items: center;
 		border: 1px solid #888;
 		cursor: pointer;
-	}
+	} */
 
 	/* #bar {
 		width: 0%;

@@ -302,24 +302,27 @@
             
             <div class="scroll-box">
                 
-                <pre>{transcript}</pre>
+                
 
                 <div id="player-cont">
                     <TrackHeading {trackTitle} />
                     <ProgressBarTime {currTimeDisplay}
                     {totalTimeDisplay}
                     {totalTime} bind:prog on:input={onScrub}/>
-                    <div id="layer2">
+                    <div id="controls">
                     <Controls {isPlaying}
                     on:rewind={rewindAudio}
                     on:playPause={playPauseAudio}
                     on:forward={forwardAudio} />
+                    </div>
+                    <div id="volume">
                     <VolumeSlider bind:vol
                     on:input={adjustVol} />
+                    </div>
                 </div>
+                <pre>{transcript}</pre>
             </div>
 
-            </div>
 
 
             {/if}
@@ -361,19 +364,22 @@
 	} */
 
     #player-cont {
-        width: 500px;
-        height: 165px;
-        padding: .7rem 1.5rem 0;
-        box-shadow: 0 0 5px black;
-        background: #222;
-        color: #bbb;
-        border-radius: 5px 5px 0 0;
-        position: absolute;
+        background: rgba(6, 67, 91, 0.5);
+        width: 100%;
+        padding: .5rem 1.5rem;
+        padding-bottom: 3rem;
+        margin-bottom: 1rem;
     }
 
-    #layer2 {
-        grid-template-columns: 4rem 4rem 4rem 4rem 1fr;
-		place-items: center;
-		column-gap: 1rem;
+    #controls {
+        /* display:inline-block; */
+        float: left;
     }
+
+    #volume {
+        float: right;
+        margin-left: 10px;
+        margin: 5px;
+    }
+
 </style>
