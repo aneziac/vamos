@@ -31,7 +31,7 @@
     <div class="container">
       <h1>What is Vamos?</h1>
       <p>
-        This platform allows users to transcribe audio files and YouTube videos into accurate, readable text using Whisper AI. Designed for efficiency and accessibility, it streamlines documentation for meetings, interviews, and lectures, while also making content more accessible for individuals with hearing impairments. With support for high audio variability and varrying models to enhance accuracy or speed depending on a user's preference, it’s a powerful tool for professionals, educators, and content creators alike.
+        This platform aims to allow users to convert audio content—meetings, lectures, and YouTube videos—into accurate transcripts with playback and an export option through an SRT format using whisper-ai. This aims to boost productivity in professional spaces and enhancing accessibility for individuals with hearing impairments.
       </p>
       <h2>This was created by:</h2>
       <ul style="list-style-type: none; padding: 0;">
