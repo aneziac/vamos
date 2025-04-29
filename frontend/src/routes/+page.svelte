@@ -136,11 +136,13 @@
     let taskId: string | null = null;
     let statusMessage: string = '';
     let transcript: string = '';
+    let output: string = '';
     let formattedTranscript: Array<[string, string]> = [];
 
     function selectRow(timestamp: string) {
         let time = Number(timestamp.slice(0, 2)) * 60 + Number(timestamp.slice(3, 5)) + Number(timestamp.slice(6, 7)) * 0.1;
         audioFile!.currentTime = time;
+        updateTime();
     }
 
     function formatTranscript(transcript: string) : Array<[string, string]> {
@@ -236,7 +238,7 @@
     }
 
     function downloadTranscript() {
-    const blob = new Blob([transcript], { type: 'text/plain' });
+    const blob = new Blob([formatSRT(transcript)], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');
@@ -246,6 +248,20 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    }
+
+    function formatSRT(p: string) {
+        let listsrt = p.split(/\r\n|\r|\n/);
+        output = '';
+        for (let i = 0; i < listsrt.length; i++) {
+            if (i % 3 == 2) {
+                output += listsrt[i].slice(1) + '\n' + '\n';
+            }
+            else {
+                output += listsrt[i] + '\n';
+            }
+        }
+        return output;
     }
 
     let fileInput;
