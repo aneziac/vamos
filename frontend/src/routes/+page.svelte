@@ -465,6 +465,6 @@
         margin-bottom: 3rem;
     }
     #middle {
-        margin-top:1rem;
+        margin-top:.75rem;
     }
 </style>
