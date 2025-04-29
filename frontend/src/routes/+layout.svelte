@@ -27,7 +27,7 @@
 		color: black;
 		font-size: 90px;
 		text-align: center;
-		margin-top: 50px;
+		margin-top: 0px;
 		/* margin-bottom: 5px; */
 		font-style: normal;
 		font-family: 'Cal Sans', sans-serif;
@@ -41,6 +41,7 @@
 		width: 20vw;
 		gap: 2rem;
 		margin: auto;
+		margin-top: -10px;
 		margin-bottom: 30px;
 		box-sizing: border-box;
 	}
