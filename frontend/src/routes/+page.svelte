@@ -280,14 +280,24 @@
     }
 </script>
 
-{#if transcript}
+<!-- {#if transcript}
+    <section class="download-action">
+        <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
+    </section>
+    {/if} -->
+<div class="container mx-auto max-w-4xl justify-center items-center -mt-6">
+    <div id ="button">  
+        {#if transcript}
     <section class="download-action">
         <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
     </section>
     {/if}
-<div class="container mx-auto max-w-4xl justify-center items-center -mt-6">
+    {#if !transcript}
+    <section id="yeet"></section>
+    {/if}
+    </div>
     <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
-        <div class="flex rounded-2xl overflow-hidden bg-gray-100">
+        <div id = "middle" class="flex rounded-2xl overflow-hidden bg-gray-100">
             <div class="group w-[70%]">
                 <Input
                 type="url"
@@ -449,7 +459,13 @@
         margin-right: 41rem;
         padding-right: 2rem;
         padding-left: 2rem;
-        padding-bottom: 2rem;
-        margin-top: -1rem;
+        /* margin-bottom: -1rem; */
+        margin-top: -3rem;
+    }
+    #yeet {
+        margin-bottom: 3rem;
+    }
+    #middle {
+        margin-top:1rem;
     }
 </style>
