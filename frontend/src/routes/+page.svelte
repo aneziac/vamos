@@ -426,7 +426,7 @@
         flex-direction: column;
         margin-top: .1rem;
         width: 100%;
-        max-height: calc(100vh - 340px);
+        max-height: calc(100vh - 320px);
     }
     #text1 {
         flex: 1 1 auto;
@@ -454,7 +454,8 @@
 
     .download-action {
         text-align: center;
-        margin-right: 41rem;
+        margin-right: 40rem;
+        margin-left: -2rem;
         padding-right: 2rem;
         padding-left: 2rem;
         /* margin-bottom: -1rem; */
