@@ -363,7 +363,7 @@
     </div>
 
     <!-- <pre id="text1">{formattedTranscript}</pre> -->
-    <div class="text1 flex flex-col overflow-y-scroll overflow-x-hidden">
+    <div class="flex flex-col overflow-y-scroll overflow-x-hidden">
         {#each formattedTranscript as [timestamp, phrase]}
           <button
             type="button"
@@ -377,11 +377,11 @@
       </div>
     {/if}
     {#if !audioUrl}
-    <div id="text1 flex flex-col overflow-y-scroll overflow-x-hidden">
+    <div id = "text1" class="flex flex-col overflow-y-scroll overflow-x-hidden">
         {#each formattedTranscript as [timestamp, phrase]}
         <button
           type="button"
-          class="grid [grid-template-columns:10%_90%] gap-4 p-2 hover:bg-gray-200 cursor-pointer rounded text-left"
+          class="grid [grid-template-columns:20%_80%] gap-8 p-2 hover:bg-gray-200 cursor-pointer rounded text-left"
           on:click={() => selectRow(timestamp)}
         >
           <div class="text-right pr-4 font-mono">[{timestamp}]</div>
@@ -435,14 +435,6 @@
         float: left;
     }
 
-    #text2 {
-        z-index: 10;
-        height: 100%;
-        overflow-y: scroll;
-        padding: 20px;
-        font-family: 'Quicksand', sans-serif;
-    }
-
     #volume {
         float: right;
         margin-left: 10px;
@@ -454,20 +446,5 @@
         margin-top: 20px;
         position: fixed;
         top: 25vh;
-    }
-
-
-    .download-link {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-
-    .download-link:hover {
-        background-color: #45a049;
     }
 </style>
