@@ -2,7 +2,10 @@
 	export let currTimeDisplay;
 	export let totalTimeDisplay;
 	export let totalTime;
-	export let prog;
+	/**
+	 * @type {any}
+	 */
+	 export let prog;
 	// export let progress;
 
 </script>

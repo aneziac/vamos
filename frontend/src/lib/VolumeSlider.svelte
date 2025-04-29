@@ -1,5 +1,8 @@
 <script>
-    export let vol;
+    /**
+	 * @type {any}
+	 */
+     export let vol;
   </script>
   
   <div class="slidecontainer">
