@@ -42,6 +42,7 @@
         if (audioFile) {
             progress = audioFile.currentTime * (100 / totalTrackTime);
             prog = audioFile.currentTime;
+            totalTime = totalTrackTime;
             let currHrs = Math.floor((audioFile.currentTime / 60) / 60);
             let currMins: any = Math.floor(audioFile.currentTime / 60);
             let currSecs: any = Math.floor(audioFile.currentTime - currMins * 60);
