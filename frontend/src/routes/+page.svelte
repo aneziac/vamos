@@ -270,16 +270,16 @@
 
                         <Button
                         type="button"
-                        class="outline-none py-10 w-full bg-transparent rounded-none border-0 focus:ring-0 focus:ring-transparent shadow-none text-lg"
+                        class="outline-none py-10 w-full bg-transparent rounded-none border-0 focus:ring-0 focus:ring-transparent shadow-none text-lg text-left pl-0 overflow-hidden whitespace-nowrap text-ellipsis"
                         on:click={openFileDialog}
-                        >
+                    >
                         {#if uploadedFile == ''}
                             or upload a file...
                         {:else}
                             {uploadedFile}
                         {/if}
-
-                        </Button>
+                    </Button>
+                    
                         {#if uploadedFile != ''}
                             <Button
                             type="button"
