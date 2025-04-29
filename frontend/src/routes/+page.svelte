@@ -241,7 +241,7 @@
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'transcript.txt';
+    a.download = 'transcript.srt';
     document.body.appendChild(a); // Needed for Firefox
     a.click();
     document.body.removeChild(a);
@@ -376,12 +376,10 @@
     {/if}
 </div>
 <section class="download-action">
-    <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
+    <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
 </section>
 {/if}
 </div>
-
-
 
 <style>
     pre {
