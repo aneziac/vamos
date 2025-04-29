@@ -280,7 +280,12 @@
     }
 </script>
 
-<div class="container mx-auto max-w-4xl justify-center items-center">
+{#if transcript}
+    <section class="download-action">
+        <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
+    </section>
+    {/if}
+<div class="container mx-auto max-w-4xl justify-center items-center -mt-6">
     <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
         <div class="flex rounded-2xl overflow-hidden bg-gray-100">
             <div class="group w-[70%]">
@@ -391,9 +396,6 @@
     </div>
     {/if}
 </div>
-<section class="download-action">
-    <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
-</section>
 {/if}
 </div>
 
@@ -405,17 +407,18 @@
     }
     .scroll-box {
         position: fixed;
-        top: 45vh;
+        top: 43.5vh;
         left: 15vw;
         right: 15vw;
         width: 70vw;
-        height: 47vh;
+        height: 51vh;
         background-color: rgb(216, 228, 233);
         border: 3px solid white;
         overflow: hidden;
         color: black;
         display: flex;
         flex-direction: column;
+        margin-top: 1.5rem;
     }
     #text1 {
         flex: 1 1 auto;
@@ -443,8 +446,10 @@
 
     .download-action {
         text-align: center;
-        margin-top: 20px;
-        position: fixed;
-        top: 25vh;
+        margin-right: 41rem;
+        padding-right: 2rem;
+        padding-left: 2rem;
+        padding-bottom: 2rem;
+        margin-top: -1rem;
     }
 </style>
