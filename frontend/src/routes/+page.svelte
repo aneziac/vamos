@@ -136,6 +136,34 @@
     let taskId: string | null = null;
     let statusMessage: string = '';
     let transcript: string = '';
+    let formattedTranscript: Array<[string, string]> = [];
+
+    function selectRow(timestamp: string) {
+        let time = Number(timestamp.slice(0, 2)) * 60 + Number(timestamp.slice(3, 5)) + Number(timestamp.slice(6, 7)) * 0.1;
+        audioFile!.currentTime = time;
+    }
+
+    function formatTranscript(transcript: string) : Array<[string, string]> {
+        console.log(transcript);
+        const splitText = transcript.split('\n');
+
+        let result: Array<[string, string]> = [];
+
+        for (let i = 0; i < splitText.length - 2; i += 3) {
+            let startTime = splitText[i + 1].split(' ')[0];
+            let importantPart = startTime.slice(3, 10).replace(',', '.');
+
+            let text = splitText[i + 2];
+
+            result.push([
+                importantPart, text
+            ])
+        }
+
+        console.log(result);
+
+        return result;
+    }
 
     async function pollTaskStatus(taskId: string) {
         const interval = setInterval(async () => {
@@ -148,10 +176,11 @@
             }
             if (data.status === 'complete') {
                 transcript = data.transcript;
+                formattedTranscript = formatTranscript(transcript);
             }
 
             statusMessage = data.message;
-        }, 5000); // Poll every 5 seconds
+        }, 1000); // Poll every 5 seconds
     }
     //async function checkFileExists(taskId: string) {
        //const response = await fetch(`${baseServerURL}/file-exists/${taskId}`);
@@ -185,7 +214,6 @@
             statusMessage = data.message;
             pollTaskStatus(taskId);
 
-            console.log(formData)
             const file = [...formData.entries()][0][1]; // little jank
             audioUrl = URL.createObjectURL(file);
             if (audioFile == null) {
@@ -205,7 +233,6 @@
     function resetFileInput() {
         uploadedFile = '';
         document.getElementById('file')!.value = '';
-        console.clear();
     }
 
     function downloadTranscript() {
@@ -237,130 +264,123 @@
     }
 </script>
 
-<!-- <div class="flex flex-col h-screen overflow-hidden"> -->
-    <!-- <div class="h-[1%] bg-gradient-to-t from-gray-500 to-gray-900 p-4">
-    </div> -->
-    <!-- <div class="h-[100%] bg-[url('/mountains.jpg')] bg-cover bg-left p-4"> -->
-        <!-- <h1 class="maintitle mt-10">VAMOS</h1> -->
-        <div class="container mx-auto max-w-4xl justify-center items-center">
-            <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
-                <div class="flex rounded-2xl overflow-hidden bg-gray-100">
-                    <div class="group w-[70%]">
-                        <Input
-                        type="url"
-                        id="youtubeLink"
-                        name="youtubeLink"
-                        bind:value={youtubeLink}
-                        placeholder="Enter a Youtube URL..."
-                        disabled={uploadedFile != ''}
-                        class="outline-none py-10 pl-10 bg-transparent focus:outline-none border-0 focus:ring-0 focus:ring-transparent shadow-none rounded-none text-lg text-black"
-                        />
-                    </div>
-                    <div class="group relative w-[30%]">
-                        <input
-                        type="file"
-                        id="file"
-                        name="fileToUpload"
-                        accept={validExtensions.join(',')}
-                        on:change={handleFileChange}
-                        disabled={youtubeLink !== ''}
-                        bind:this={fileInput}
-                        class="hidden w-0"
-                        />
-
-                        <Button
-                        type="button"
-                        class="outline-none py-10 w-full bg-transparent rounded-none border-0 focus:ring-0 focus:ring-transparent shadow-none text-lg text-left pl-0 overflow-hidden whitespace-nowrap text-ellipsis"
-                        on:click={openFileDialog}
-                    >
-                        {#if uploadedFile == ''}
-                            or upload a file...
-                        {:else}
-                            {uploadedFile}
-                        {/if}
-                    </Button>
-                    
-                        {#if uploadedFile != ''}
-                            <Button
-                            type="button"
-                            on:click={resetFileInput}
-                            class="absolute right-2 top-1/4 bg-red-300 text-white hover:bg-red-400 transition-colors duration-200 whitespace-nowrap rounded-full px-2 py-1 text-sm">X</Button>
-                        {/if}
-                    </div>
-
-                    <div class="flex justify-center">
-                        <Button
-                        type="submit"
-                        class="py-10 bg-gray-400 rounded-none hover:bg-green-700"
-                        >
-                        Submit
-                        </Button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- {#if audioUrl}
-            <audio controls src={audioUrl}></audio>
-            <section id="player-cont">
-                <TrackHeading {trackTitle} />
-                <ProgressBarTime {currTimeDisplay}
-                {totalTimeDisplay}
-                {totalTime} bind:prog on:input={onScrub}/>
-                <Controls {isPlaying}
-                on:rewind={rewindAudio}
-                on:playPause={playPauseAudio}
-                on:forward={forwardAudio}/>
-                <VolumeSlider bind:vol
-                on:input={adjustVol} />
-            </section>
-            {/if} -->
-
-
-            {#if statusMessage}
-                <p>{statusMessage}</p>
-            {/if}
-
-            {#if transcript}
-            <!-- <section class="download-action">
-                <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
-            </section> -->
-            <section class="download-action">
-                <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
-            </section>
-            <div class="scroll-box">
-                
-                {#if audioUrl}
-                <div id="player-cont">
-                    <TrackHeading {trackTitle} />
-                    <ProgressBarTime {currTimeDisplay}
-                    {totalTimeDisplay}
-                    {totalTime} bind:prog on:input={onScrub}/>
-                    <div id="controls">
-                    <Controls {isPlaying}
-                    on:rewind={rewindAudio}
-                    on:playPause={playPauseAudio}
-                    on:forward={forwardAudio} />
-                    </div>
-                    <div id="volume">
-                    <VolumeSlider bind:vol
-                    on:input={adjustVol} />
-                    </div>
-                </div>
-                <pre id="text1">{transcript}</pre>
-                {/if}
-                {#if !audioUrl}
-                <pre id="text2">{transcript}</pre>
-                {/if}
+<div class="container mx-auto max-w-4xl justify-center items-center">
+    <form on:submit={handleSubmit} enctype="multipart/form-data" id="myForm">
+        <div class="flex rounded-2xl overflow-hidden bg-gray-100">
+            <div class="group w-[70%]">
+                <Input
+                type="url"
+                id="youtubeLink"
+                name="youtubeLink"
+                bind:value={youtubeLink}
+                placeholder="Enter a Youtube URL..."
+                disabled={uploadedFile != ''}
+                class="outline-none py-10 pl-10 bg-transparent focus:outline-none border-0 focus:ring-0 focus:ring-transparent shadow-none rounded-none text-lg text-black"
+                />
             </div>
+            <div class="group relative w-[30%]">
+                <input
+                type="file"
+                id="file"
+                name="fileToUpload"
+                accept={validExtensions.join(',')}
+                on:change={handleFileChange}
+                disabled={youtubeLink !== ''}
+                bind:this={fileInput}
+                class="hidden w-0"
+                />
 
+                <Button
+                type="button"
+                class="outline-none py-10 w-full bg-transparent rounded-none border-0 focus:ring-0 focus:ring-transparent shadow-none text-lg"
+                on:click={openFileDialog}
+                >
+                {#if uploadedFile == ''}
+                or upload a file...
+                {:else}
+                {uploadedFile}
+                {/if}
 
-
+            </Button>
+            {#if uploadedFile != ''}
+            <Button
+            type="button"
+            on:click={resetFileInput}
+            class="absolute right-2 top-1/4 bg-red-300 text-white hover:bg-red-400 transition-colors duration-200 whitespace-nowrap rounded-full px-2 py-1 text-sm">X</Button>
             {/if}
         </div>
-    <!-- </div> -->
-    <!-- <div class="h-[1%] bg-gradient-to-b from-gray-700 to-gray-900 p-4">
-    </div> -->
-<!-- </div> -->
+
+        <div class="flex justify-center">
+            <Button
+            type="submit"
+            class="py-10 bg-gray-400 rounded-none hover:bg-green-700"
+            >
+            Submit
+        </Button>
+    </div>
+</div>
+</form>
+
+{#if statusMessage}
+<p>{statusMessage}</p>
+{/if}
+
+{#if transcript}
+
+<div class="scroll-box">
+    {#if audioUrl}
+    <div id="player-cont">
+        <TrackHeading {trackTitle} />
+        <ProgressBarTime {currTimeDisplay}
+        {totalTimeDisplay}
+        {totalTime} bind:prog on:input={onScrub}/>
+        <div id="controls">
+            <Controls {isPlaying}
+            on:rewind={rewindAudio}
+            on:playPause={playPauseAudio}
+            on:forward={forwardAudio} />
+        </div>
+        <div id="volume">
+            <VolumeSlider bind:vol
+            on:input={adjustVol} />
+        </div>
+    </div>
+
+    <!-- <pre id="text1">{formattedTranscript}</pre> -->
+    <div class="text1 flex flex-col overflow-y-scroll overflow-x-hidden">
+        {#each formattedTranscript as [timestamp, phrase]}
+          <button
+            type="button"
+            class="grid [grid-template-columns:20%_80%] gap-4 p-2 hover:bg-gray-200 cursor-pointer rounded text-left"
+            on:click={() => selectRow(timestamp)}
+          >
+            <div class="text-right pr-4 font-mono">[{timestamp}]</div>
+            <div class="text-left">{phrase}</div>
+          </button>
+        {/each}
+      </div>
+    {/if}
+    {#if !audioUrl}
+    <div id="text1 flex flex-col overflow-y-scroll overflow-x-hidden">
+        {#each formattedTranscript as [timestamp, phrase]}
+        <button
+          type="button"
+          class="grid [grid-template-columns:10%_90%] gap-4 p-2 hover:bg-gray-200 cursor-pointer rounded text-left"
+          on:click={() => selectRow(timestamp)}
+        >
+          <div class="text-right pr-4 font-mono">[{timestamp}]</div>
+          <div class="text-left">{phrase}</div>
+        </button>
+      {/each}
+    </div>
+    {/if}
+</div>
+<section class="download-action">
+    <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
+</section>
+{/if}
+</div>
+
 
 
 <style>
@@ -370,25 +390,35 @@
         overflow-x: hidden;
     }
     .scroll-box {
-        height: 47vh;
-        overflow-y: scroll;
-        /* padding: 50px; */
-        margin: 30px auto;
-        border: 3px solid white;
-        color: black;
-        background-color: rgb(216, 228, 233);
-        text-align: center;
         position: fixed;
+        top: 45vh;
         left: 15vw;
         right: 15vw;
-        top: 45vh ;
         width: 70vw;
+        height: 47vh;
+        background-color: rgb(216, 228, 233);
+        border: 3px solid white;
+        overflow: hidden;
+        color: black;
+        display: flex;
+        flex-direction: column;
     }
     #text1 {
-        z-index: 10;
-        height: 60%;
-        overflow-y: scroll;
-        font-family: 'Quicksand', sans-serif; 
+        flex: 1 1 auto;
+        padding: 1rem;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    #player-cont {
+        flex: 0 0 auto;
+        background: rgba(28, 82, 103, 0.5);
+        padding: 1rem;
+        border-bottom: 1px solid #ccc;
+     }
+
+    #controls {
+        /* display:inline-block; */
+        float: left;
     }
 
     #text2 {
@@ -396,19 +426,7 @@
         height: 100%;
         overflow-y: scroll;
         padding: 20px;
-        font-family: 'Quicksand', sans-serif; 
-    }
-    #player-cont {
-        background: rgba(28, 82, 103, 0.5);
-        width: 100%;
-        padding: .5rem 1.5rem;
-        padding-bottom: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    #controls {
-        /* display:inline-block; */
-        float: left;
+        font-family: 'Quicksand', sans-serif;
     }
 
     #volume {
@@ -416,7 +434,7 @@
         margin-left: 10px;
         margin: 5px;
     }
-    
+
     .download-action {
         text-align: center;
         margin-top: 20px;

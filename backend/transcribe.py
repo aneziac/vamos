@@ -37,15 +37,15 @@ def transcribe_audio(audio_path: str, task_id: UUID, logger: Logger):
     srt_file = f'./uploads/transcripts/{task_id}.srt'
 
     os.makedirs(os.path.dirname(srt_file), exist_ok=True)
-    
+
     with open(srt_file, "w") as f:
         for idx, segment in enumerate(segments):
             start_time = segment["start"]
             end_time = segment["end"]
             text = segment["text"]
 
-            #f.write(f"{idx + 1}\n")
-            #f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
+            f.write(f"{idx + 1}\n")
+            f.write(f"{srt_time_format(start_time)} --> {srt_time_format(end_time)}\n")
             if(text != ""):
                 f.write(f"{text}\n")
             else:

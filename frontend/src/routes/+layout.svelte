@@ -8,12 +8,7 @@
 	<nav>
 		<a href="/">Home</a>
 		<a href="/about">About</a>
-		<!-- <a href="/settings">Settings</a> -->
 	</nav>
-
-
-<!-- <div class="h-[100%] bg-[url('/mountains.jpg')] bg-cover bg-left p-4">
-</div> -->
 
 
 {@render children()}
@@ -23,9 +18,9 @@
 		@apply bg-[url('/mountains.jpg')];
 		background-repeat: no-repeat;
 		background-attachment: fixed;
-		background-position: center; 
+		background-position: center;
 		background-size: cover;
-		font-family: 'Quicksand', sans-serif; 
+		font-family: 'Quicksand', sans-serif;
 		margin: 5px auto;
 	}
 	.maintitle {
