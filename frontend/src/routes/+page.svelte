@@ -152,14 +152,14 @@
             statusMessage = data.message;
         }, 5000); // Poll every 5 seconds
     }
-    async function checkFileExists(taskId: string) {
-        const response = await fetch(`${baseServerURL}/file-exists/${taskId}`);
-        if (response.ok) {
-            const data = await response.json();
-            return data.exists;
-        }
-        return false;
-        }
+    //async function checkFileExists(taskId: string) {
+       //const response = await fetch(`${baseServerURL}/file-exists/${taskId}`);
+        //if (response.ok) {
+            //const data = await response.json();
+            //return data.exists;
+        //}
+        //return false;
+        //}
 
     async function handleSubmit(event: Event) {
         event.preventDefault();
@@ -205,6 +205,19 @@
         uploadedFile = '';
         document.getElementById('file')!.value = '';
         console.clear();
+    }
+
+    function downloadTranscript() {
+    const blob = new Blob([transcript], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transcript.txt';
+    document.body.appendChild(a); // Needed for Firefox
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
     }
 
     let fileInput;
@@ -307,7 +320,12 @@
             {/if}
 
             {#if transcript}
-            
+            <!-- <section class="download-action">
+                <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
+            </section> -->
+            <section class="download-action">
+                <Button on:click={downloadTranscript} class="download-link">Download Transcript</Button>
+            </section>
             <div class="scroll-box">
                 
                 {#if audioUrl}
@@ -338,9 +356,6 @@
 
             {/if}
         </div>
-        <section class="download-action">
-            <a href={`/download/${taskId}`} download class="download-link">Download Transcript</a>
-        </section>
     <!-- </div> -->
     <!-- <div class="h-[1%] bg-gradient-to-b from-gray-700 to-gray-900 p-4">
     </div> -->
@@ -404,8 +419,8 @@
     .download-action {
         text-align: center;
         margin-top: 20px;
-        position: absolute;
-        top: 5vh;
+        position: fixed;
+        top: 25vh;
     }
 
 
