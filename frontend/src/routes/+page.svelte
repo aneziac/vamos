@@ -416,19 +416,17 @@
         overflow-x: hidden;
     }
     .scroll-box {
-        position: fixed;
-        top: 43.5vh;
-        left: 15vw;
-        right: 15vw;
-        width: 70vw;
-        height: 51vh;
+        position: relative;
         background-color: rgb(216, 228, 233);
         border: 3px solid white;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         color: black;
         display: flex;
         flex-direction: column;
-        margin-top: 1.5rem;
+        margin-top: .1rem;
+        width: 100%;
+        max-height: calc(100vh - 340px);
     }
     #text1 {
         flex: 1 1 auto;
